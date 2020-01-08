@@ -1,0 +1,46 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: pcpb-service
+spec:
+  ports:
+  - port: 3000
+  type: LoadBalancer
+  selector:
+    app: pcpb
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pcpb-deployment
+spec:
+  selector:
+    matchLabels:
+      app: pcpb
+  template:
+    metadata:
+      labels:
+        app: pcpb
+    spec:
+      containers:
+      - name: pcpb
+        image: kryllis/pcpb
+        ports:
+        - containerPort: 3000
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: pcpb-ingress
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/auth-type: "basic"
+    traefik.ingress.kubernetes.io/auth-secret: "mysecret"
+spec:
+  rules:
+  - host: pcpb.pcpb
+    http:
+      paths:
+      - backend:
+          serviceName: pcpb-service
+          servicePort: 3000

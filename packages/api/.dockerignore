@@ -1,0 +1,11 @@
+node_modules
+npm-debug.log
+.git
+k8s
+.vscode
+.dockerignore
+pcpb
+skaffold.yaml
+dist
+bigbars
+fuckhelm
