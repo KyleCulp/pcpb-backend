@@ -3,9 +3,6 @@ npm-debug.log
 .git
 k8s
 .vscode
-.dockerignore
-pcpb
+.github
 skaffold.yaml
 dist
-bigbars
-fuckhelm
