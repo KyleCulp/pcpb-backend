@@ -6,53 +6,38 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express, { Express } from 'express';
 import { createServer } from 'http';
-import { checkEnvironmentVariables } from './Utils/EnvironmentVarCheck';
-import { installMiddleware } from './Middleware';
+import { checkEnvironmentVariables } from './utils/checkEnvironmentVariables';
+import { installMiddleware } from './middleware';
+const health = require('@cloudnative/health-connect');
 
 const PORT = process.env.SERVER_PORT ? parseInt(process.env.SERVER_PORT) : 3000;
+const healthcheck = new health.HealthChecker();
 
 (async () => {
 	const app: Express = express();
-	// Run at beginning, ensuring a faulty deploy
-	// won't connect to the Database, wasting connections
-	// checkEnvironmentVariables();
-
+	
+	// Check if all needed environment variables
+	// Are accessible & gracefully stop if any are missing
+	checkEnvironmentVariables();
+	
 	/*
-	* Getting access to the HTTP server directly means that we can do things
-	* with websockets if we need to (e.g. GraphQL subscriptions).
+	*	Getting access to the HTTP server directly means that we can do things
+	*	with websockets if we need to (e.g. GraphQL subscriptions).
 	*/
 	const httpServer = createServer(app);
 	app.set("httpServer", httpServer);
 
-	/*
-	* When we're using websockets, we may want them to have access to
-	* sessions/etc for authentication.
-	*/
-	const websocketMiddlewares = [];
-	app.set("websocketMiddlewares", websocketMiddlewares);
 
-	/*
-	*  Install middleware in middleware folder
-	*/
+	// Install middleware in middleware folder
 	// installMiddleware(app);
 
-	app.use(cookieParser());
-	app.use(compress());
-	app.use(
-		cors({
-			origin: 'localhost:3000',
-			credentials: true
-		})
-	);
-
-	app.get('/', async (req, res) => {
-		res.send(200);
-	})
-
-	app.get('/health', async (req, res) => {
-		res.send(200);
-	});
-
+	/*
+	*	Cloud Health Liveliness & Readiness Endpoints
+	*	Handled by Cloud Health Connect
+	*/
+	app.use('/live', health.LivenessEndpoint(healthcheck));
+	app.use('/ready', health.ReadinessEndpoint(healthcheck));
+	app.use('/health', health.HealthEndpoint(healthcheck));
 
 	httpServer.listen(PORT, () => {
 		const address = httpServer.address();

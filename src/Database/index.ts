@@ -1,2 +1,2 @@
 export { redisInstance } from './Redis';
-export { rootPgPool, authPgPool } from './Postgres';
+export { pgMasterPool, pgMasterAdminPool } from './Postgres';

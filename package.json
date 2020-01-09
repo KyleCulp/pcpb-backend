@@ -1,5 +1,5 @@
 {
-	"name": "graphql-api",
+	"name": "pcpb-graphql-api",
 	"version": "0.0.1",
 	"description": "Backend API of PCPartBuilder",
 	"license": "MIT",
@@ -13,9 +13,10 @@
 		"format": "eslint . --ext .ts --fix --quiet"
 	},
 	"repository": {
-		"url": "https://github.com/PCPartBuilder/PCPartBuilder-API"
+		"url": "https://github.com/PCPartBuilder/pcpb-graphql-api.git"
 	},
 	"dependencies": {
+		"@cloudnative/health-connect": "^2.1.0",
 		"@graphile-contrib/pg-many-to-many": "^1.0.0-beta.12",
 		"chalk": "^3.0.0",
 		"compression": "^1.7.4",

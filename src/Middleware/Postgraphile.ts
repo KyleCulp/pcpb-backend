@@ -1,10 +1,8 @@
 import postgraphile, { enhanceHttpServerWithSubscriptions } from "postgraphile";
 import { Application } from "express";
-import { PostgraphileInstance } from "../GraphQL/Postgraphile";
-import { AuthenticationResolver } from "../GraphQL/Postgraphile/Authentication";
+import { PostgraphileInstance } from "../graphql/postgraphile";
 import PgManyToManyPlugin from "@graphile-contrib/pg-many-to-many";
-import { authPgPool } from "../Database";
-import { getUserClaimsFromRequest } from "./installPassport";
+import { pgMasterPool } from "../database";
 
 
 
@@ -44,7 +42,7 @@ export const installPostgraphile = async (app: Application) => {
 
 	// Install the PostGraphile middleware
 	const postgraphileMiddleware = postgraphile(
-		authPgPool,
+		pgMasterPool,
 		schemas,
 		appendedOptions
 	);

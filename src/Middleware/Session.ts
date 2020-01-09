@@ -1,6 +1,6 @@
-import { Application } from 'express';
-import session from 'express-session';
 import { RedisStore as IRedisStore } from 'connect-redis';
+import session = require('express-session');
+import { Application } from 'express';
 const RedisStore = require('connect-redis')(session);
 require("dotenv").config();
 

@@ -6,3 +6,4 @@ k8s
 .github
 skaffold.yaml
 dist
+pcpb-graphql-api
