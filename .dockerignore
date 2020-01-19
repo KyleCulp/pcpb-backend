@@ -1,9 +1,9 @@
 node_modules
 npm-debug.log
 .git
-k8s
-.vscode
 .github
-skaffold.yaml
-dist
-pcpb-graphql-api
+.vscode
+.docker
+.env
+*Dockerfile*
+*docker-compose*

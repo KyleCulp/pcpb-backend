@@ -2,7 +2,7 @@ import { PostGraphileOptions } from "postgraphile";
 
 require("dotenv").config();
 
-const schemas = ["app", "parts"];
+const schemas = ["app_public", "parts"];
 // const pluginHook = makePluginHook([PgPubSub].filter(_ => _));
 
 const {

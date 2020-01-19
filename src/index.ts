@@ -8,10 +8,12 @@ import express, { Express } from 'express';
 import { createServer } from 'http';
 import { checkEnvironmentVariables } from './utils/checkEnvironmentVariables';
 import { installMiddleware } from './middleware';
+import { makeShutdownActions } from './shutdownActions';
 const health = require('@cloudnative/health-connect');
 
 const PORT = process.env.SERVER_PORT ? parseInt(process.env.SERVER_PORT) : 3000;
 const healthcheck = new health.HealthChecker();
+const isDev = process.env.NODE_ENV === "development";
 
 (async () => {
 	const app: Express = express();
@@ -29,7 +31,7 @@ const healthcheck = new health.HealthChecker();
 
 
 	// Install middleware in middleware folder
-	// installMiddleware(app);
+	installMiddleware(app);
 
 	/*
 	*	Cloud Health Liveliness & Readiness Endpoints
@@ -38,6 +40,18 @@ const healthcheck = new health.HealthChecker();
 	app.use('/live', health.LivenessEndpoint(healthcheck));
 	app.use('/ready', health.ReadinessEndpoint(healthcheck));
 	app.use('/health', health.HealthEndpoint(healthcheck));
+
+	/*
+	* 	Shutdown processes
+	* 	for clean ends or something
+	*/
+	const shutdownActions = makeShutdownActions();
+
+	if(isDev) {
+		shutdownActions.push(() => {
+		  	require("inspector").close();
+		});
+	}
 
 	httpServer.listen(PORT, () => {
 		const address = httpServer.address();

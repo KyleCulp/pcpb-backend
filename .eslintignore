@@ -1,3 +1,6 @@
 node_modules
 umd
 dist
+coverage
+k8s
+scripts
