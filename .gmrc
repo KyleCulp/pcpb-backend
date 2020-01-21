@@ -1,20 +1,22 @@
 {
-	"pgSettings": {
-		"search_path": "app_public,app_private,public,parts"
-	},
-	"placeholders": {
-		":POSTGRAPHILE_PASSWORD": "!ENV"
-	},
-	"afterReset": [
-		"afterReset.sql"
-	],
-	"afterAllMigrations": [
-		{
-			"_": "command",
-			"command": "pg_dump --schema-only --no-owner --exclude-schema=graphile_migrate --file=schema.sql \"$GM_DBURL\""
-		}
-	],
-	"afterCurrent": [
-		
-	]
+  "pgSettings": {
+    "search_path": "app_public,app_private,public,parts"
+  },
+  "placeholders": {
+    ":POSTGRAPHILE_PASSWORD": "!ENV",
+    ":DATABASE_AUTHENTICATOR": "!ENV",
+    ":DATABASE_VISITOR": "!ENV",
+    ":DATABASE_NAME": "!ENV",
+    ":DATABASE_OWNER": "!ENV"
+  },
+  "afterReset": [
+    "afterReset.sql"
+  ],
+  "afterAllMigrations": [
+    {
+      "_": "command",
+      "command": "pg_dump --schema-only --no-owner --exclude-schema=graphile_migrate --file=data/schema.sql \"$GM_DBURL\""
+    }
+  ],
+  "afterCurrent": []
 }

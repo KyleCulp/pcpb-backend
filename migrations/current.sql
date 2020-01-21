@@ -19,15 +19,16 @@ comment on column app_public.user_account.created_at is 'The time this person wa
 comment on column app_public.user_account.updated_at is 'The time this person was last updated.';
 
 -- Anyone can read data from this table
-GRANT SELECT ON TABLE app_public.user_account TO app_anonymous, app_postgraphile;
+GRANT SELECT ON TABLE app_public.user_account TO app_anonymous, app_postgraphile, app_person;
 
 -- Only logged in people can update & delete it. 
 -- This RBAC helps us differentiate guest from users  
-GRANT UPDATE, DELETE ON TABLE app_public.user_account TO app_postgraphile;
+GRANT UPDATE, DELETE ON TABLE app_public.user_account TO app_postgraphile, app_person;
 
 -- RLS policies provide fine-grain security 
 
 -- Let anyone select on this row
+drop policy if exists select_user_account on app_public.user_account;
 CREATE POLICY select_user_account ON app_public.user_account
     FOR SELECT 
 	USING (true);
@@ -53,7 +54,7 @@ comment on table  app_private.user_account_private is 'Private information about
 comment on column app_private.user_account_private.user_id is 'The id of the person associated with this account.';
 comment on column app_private.user_account_private.email is 'The email address of the person.';
 comment on column app_private.user_account_private.password_hash is 'A hash of the person’s password.';
-comment on column app_private.user_account_private.updated_at is 'Last time the table was updated.';
+
 
 CREATE OR REPLACE FUNCTION app_private.set_updated_at() RETURNS TRIGGER AS $$
 BEGIN

@@ -11,10 +11,13 @@ export DEBIAN_FRONTEND=noninteractive
 # Remove outdated yarn from /opt
 rm -rf /opt/yarn-* /usr/local/bin/yarn /usr/local/bin/yarnpkg
 
+# wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
+# echo "deb http://apt.postgresql.org/pub/repos/apt/ ${RELEASE}"-pgdg main | tee /etc/apt/sources.list.d/pgdg.list
+
 # Install most things we need
 apt-get update
 apt-get install -y --no-install-recommends apt-utils dialog curl apt-transport-https lsb-release git bash-completion iproute2 procps sudo
-apt-get install -y postgresql-client
+# apt-get install postgresql-11
 
 # Add additional apt sources...
 curl -sS https://dl.yarnpkg.com/$(lsb_release -is | tr '[:upper:]' '[:lower:]')/pubkey.gpg | apt-key add - 2>/dev/null
@@ -30,7 +33,7 @@ if [ "$1" = "dev" ]; then
 fi
 
 # Install eslint globally
-npm i -g eslint ts-node-dev typescript
+npm i -g eslint ts-node-dev typescript dotenv
 
 # Install docker and docker-compose (for setup)
 curl https://get.docker.com/builds/Linux/x86_64/docker-latest.tgz | tar xvz -C /tmp/ && mv /tmp/docker/docker /usr/bin/docker

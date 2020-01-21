@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-if [ "$GM_DBURL" = "" ]; then
+if [ "$GM_DBURL" = "" ] then
   echo "This script should only be ran from inside graphile-migrate";
   exit 1;
 fi

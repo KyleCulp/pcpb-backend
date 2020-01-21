@@ -15,6 +15,7 @@ services:
       - .:/work
       - /var/run/docker.sock:/var/run/docker.sock
       - nm_root:/work/node_modules
+      - db-volume:/var/lib/postgresql/data
       ## https://code.visualstudio.com/docs/remote/containers-advanced#_avoiding-extension-reinstalls-on-container-rebuild
       - vscode-extensions:/root/.vscode-server
       #! LINUX HOST ONLY
@@ -56,7 +57,7 @@ services:
     # otherwise we get permission denied errors. So this one has to run as
     # root. :(
     #
-    # user: $UID
+    user: $UID
     working_dir: /
     volumes:
       - db-volume:/var/lib/postgresql/data
@@ -79,7 +80,7 @@ services:
     networks:
       - default
     restart: unless-stopped
-  
+
   pgadmin:
     container_name: pgadmin
     image: dpage/pgadmin4
@@ -89,24 +90,23 @@ services:
     volumes:
       - pgadmin-volume:/root/.pgadmin
     ports:
-      - "${PGADMIN_PORT:-5050}:80"
+      - '${PGADMIN_PORT:-5050}:80'
     networks:
       - default
     restart: unless-stopped
-      
 
 networks:
-    default:
-        # No metadata required right now.
+  default:
+    # No metadata required right now.
 
 volumes:
-    # Postgres' data
-    db-volume:
-    # Redis' data
-    redis-volume:
-    # PGAdmin's data
-    pgadmin-volume:
-    # Node modules
-    nm_root:
-    # used for keeeping vscode-extensions while rebuilding
-    vscode-extensions:
+  # Postgres' data
+  db-volume:
+  # Redis' data
+  redis-volume:
+  # PGAdmin's data
+  pgadmin-volume:
+  # Node modules
+  nm_root:
+  # used for keeeping vscode-extensions while rebuilding
+  vscode-extensions:
