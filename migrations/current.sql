@@ -1,4 +1,3 @@
-
 create table app_public.user_account (
 	user_id uuid primary key default public.uuid_generate_v1mc(),
 	username text unique,
@@ -73,4 +72,3 @@ drop trigger if exists user_account_updated_at on app_public.user_account;
 CREATE trigger user_account_updated_at BEFORE UPDATE ON app_public.user_account
 	FOR EACH ROW
 	EXECUTE PROCEDURE app_private.set_updated_at();
-

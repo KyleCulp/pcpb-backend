@@ -11,19 +11,19 @@ export DEBIAN_FRONTEND=noninteractive
 # Remove outdated yarn from /opt
 rm -rf /opt/yarn-* /usr/local/bin/yarn /usr/local/bin/yarnpkg
 
-# wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
-# echo "deb http://apt.postgresql.org/pub/repos/apt/ ${RELEASE}"-pgdg main | tee /etc/apt/sources.list.d/pgdg.list
-
 # Install most things we need
 apt-get update
 apt-get install -y --no-install-recommends apt-utils dialog curl apt-transport-https lsb-release git bash-completion iproute2 procps sudo
-# apt-get install postgresql-11
 
 # Add additional apt sources...
 curl -sS https://dl.yarnpkg.com/$(lsb_release -is | tr '[:upper:]' '[:lower:]')/pubkey.gpg | apt-key add - 2>/dev/null
 echo "deb https://dl.yarnpkg.com/$(lsb_release -is | tr '[:upper:]' '[:lower:]')/ stable main" | tee /etc/apt/sources.list.d/yarn.list
-# ... and import them
+
+# Add Postgresql-client
+sh -c 'echo "deb http://ftp.de.debian.org/debian buster main" > /etc/apt/sources.list.d/pgdg.list'
 apt-get update
+# apt-get upgrade
+apt-get install -y --no-install-recommends postgresql-client-11
 
 # './setup.sh dev' installs more handy development utilities...
 if [ "$1" = "dev" ]; then
@@ -66,7 +66,8 @@ locale-gen en_US.UTF-8
 # Clean up
 apt-get autoremove -y
 apt-get clean -y
-rm -rf /var/lib/apt/lists/*
+# unsure if needed
+# rm -rf /var/lib/apt/lists/*
 
 # Fix permissions (inspired by https://hub.docker.com/r/bitnami/express/dockerfile/)
 mkdir -p /dist /app /.npm /.yarn /.config /.cache /.local

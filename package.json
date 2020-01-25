@@ -6,19 +6,17 @@
   "main": "dist/index.js",
   "scripts": {
     "start:prod": "npm run build && node dist/index.js",
-    "start:dev": "nodemon --exec 'ts-node-dev' src/index.ts",
+    "start:dev": "ts-node-dev src/index.ts",
     "build": "tsc",
     "lint": "eslint . --ext .ts",
     "format": "eslint . --ext .ts --fix --quiet",
     "gm": "node -r dotenv/config ./node_modules/.bin/graphile-migrate",
-    "migrate": "npm run gm migrate",
-    "watch": "npm run gm watch",
-    "commit": "npm run gm commit",
-    "uncommit": "npm run gm uncommit",
-    "reset": "npm run gm reset",
-    "dump-schema": "pg_dump -s -v -f data/schema.sql postgres://postgres@postgres/dev --no-sync --schema-only --no-owner --exclude-schema=graphile_migrate --exclude-schema=graphile_worker",
-    "dump-db": "",
-    "install-db": "node scripts/install-schema.js"
+    "db:migrate": "npm run gm migrate",
+    "db:watch": "npm run gm watch",
+    "db:commit": "npm run gm commit",
+    "db:uncommit": "npm run gm uncommit",
+    "db:reset": "npm run gm reset",
+    "dump-schema": "pg_dump -s -v -f data/schema.sql postgres://postgres@postgres/dev --no-sync --schema-only --no-owner --exclude-schema=graphile_migrate --exclude-schema=graphile_worker"
   },
   "repository": {
     "url": "https://github.com/PCPartBuilder/pcpb-graphql-api.git"
@@ -33,6 +31,7 @@
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "dree": "^2.4.6",
+    "eslint-config-airbnb-typescript": "^6.3.1",
     "express": "^4.17.1",
     "express-session": "^1.17.0",
     "graphile-migrate": "0.0.17",
