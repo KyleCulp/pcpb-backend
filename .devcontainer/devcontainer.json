@@ -24,11 +24,13 @@
   "extensions": [
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
+    "bradymholt.pgformatter",
     "msjsdiag.debugger-for-chrome",
     "mikestead.dotenv",
     "ms-azuretools.vscode-docker",
     "p1c2u.docker-compose",
-    "tombonnike.vscode-status-bar-format-toggle"
+    "tombonnike.vscode-status-bar-format-toggle",
+    "xyz.plsql-language"
     // "dzannotti.vscode-babel-coloring",
     // "codemooseus.vscode-devtools-for-chrome",
     // "cancerberosgx.vscode-typescript-refactors",

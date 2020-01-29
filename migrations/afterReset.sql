@@ -75,4 +75,8 @@ $do$;
 grant app_anonymous to app_postgraphile;
 grant app_person to app_postgraphile;
 
+grant usage on schema app_public to app_anonymous, app_person;
+grant usage on schema app_private to app_anonymous, app_person;
+grant usage on schema parts to app_anonymous, app_person;
+
 COMMIT;
