@@ -28,7 +28,7 @@ export const installDatabasePools = async (app: Application) => {
   const pgMasterAdminPool = new Pool({
     connectionString: pgMasterAdminString
   });
-  app.set('pgMasterAdminString', pgMasterAdminPool);
+  app.set('pgMasterAdminPool', pgMasterAdminPool);
 
   const redisSession = await redisInstance();
   app.set('redisSession', redisSession);

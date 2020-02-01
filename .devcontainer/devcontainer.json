@@ -1,6 +1,6 @@
 // If you want to run as a non-root user in the container, see ../docker-compose.yml.
 {
-  "name": "pcpb-graphql-api",
+  "name": "pcpb-backend",
   "dockerComposeFile": "../docker-compose.yml",
   "service": "devserver", // attaches to this service after docker-compose up `runServices`
   "workspaceFolder": "/work",
@@ -28,7 +28,8 @@
     "mikestead.dotenv",
     "ms-azuretools.vscode-docker",
     "p1c2u.docker-compose",
-    "tombonnike.vscode-status-bar-format-toggle"
+    "tombonnike.vscode-status-bar-format-toggle",
+    "ckolkman.vscode-postgres"
     // "dzannotti.vscode-babel-coloring",
     // "codemooseus.vscode-devtools-for-chrome",
     // "cancerberosgx.vscode-typescript-refactors",

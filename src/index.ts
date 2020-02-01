@@ -8,7 +8,7 @@ import express, { Express } from 'express';
 import { createServer } from 'http';
 import { checkEnvironmentVariables, isDev } from './utils';
 import { installMiddleware } from './middleware';
-import { makeShutdownActions } from './shutdownActions';
+import { makeShutdownActions } from './utils/shutdownActions';
 const health = require('@cloudnative/health-connect');
 
 const PORT = process.env.SERVER_PORT ? parseInt(process.env.SERVER_PORT) : 3000;
